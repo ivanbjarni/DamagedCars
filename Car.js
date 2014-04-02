@@ -36,6 +36,7 @@ Car.prototype.update = function (du) {
     this.vx /= 1+this.friction;
     this.vy /= 1+this.friction;
     this.direction = mmod(this.direction,2*Math.PI)
+    particleManager.addSParticle(this.cx,this.cy,"fire",4);
 };
 
 Car.prototype.render = function (ctx) {
