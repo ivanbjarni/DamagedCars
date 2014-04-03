@@ -22,12 +22,6 @@ g_ball.update = function (du) {
     var nextX = prevX + this.xVel * du;
     var nextY = prevY + this.yVel * du;
 
-    // Bounce off the Cars
-    if (g_Car1.collidesWith(prevX, prevY, nextX, nextY, this.radius) ||
-        g_Car2.collidesWith(prevX, prevY, nextX, nextY, this.radius))
-    {
-        this.xVel *= -1;
-    }
     
     // Bounce off top and bottom edges
     if (nextY < 0 ||                             // top edge

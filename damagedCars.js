@@ -36,29 +36,32 @@ var KEY_W = 'W'.charCodeAt(0);
 var KEY_S = 'S'.charCodeAt(0);
 var KEY_A = 'A'.charCodeAt(0);
 var KEY_D = 'D'.charCodeAt(0);
+var KEY_SPACE = ' '.charCodeAt(0);
 
-var g_Car1 = new Car({
-    cx : 30,
-    cy : 100,
+var mainCar = new Car({
+    pos: new vec2(100,100),
+    vel: new vec2(0,0),
     
     GO_UP   : KEY_W,
     GO_DOWN : KEY_S,
     GO_LEFT : KEY_A,
-    GO_RIGHT : KEY_D
+    GO_RIGHT : KEY_D,
+    GO_RESET : KEY_SPACE
 });
+
+entityManager.addCar(mainCar);
 
 // Car 2
 
 var KEY_I = 'I'.charCodeAt(0);
 var KEY_K = 'K'.charCodeAt(0);
 
-var g_Car2 = new Car({
-    cx : 370,
-    cy : 300,
+/*entityManager.addCar(new Car({
+    pos: new vec2(100,200),
     
     GO_UP   : KEY_I,
     GO_DOWN : KEY_K
-});
+}));*/
 
 // =============
 // GATHER INPUTS
@@ -87,9 +90,7 @@ function updateSimulation(du) {
     
     g_ball.update(du);
     particleManager.update(du);
-    
-    g_Car1.update(du);
-    g_Car2.update(du);
+    entityManager.update(du);
 }
 
 
@@ -111,9 +112,8 @@ function renderSimulation(ctx) {
 
     g_ball.render(ctx);
     particleManager.render(ctx);
-    
-    g_Car1.render(ctx);
-    g_Car2.render(ctx);
+    entityManager.render(ctx);
+
 }
 
 // Kick it off

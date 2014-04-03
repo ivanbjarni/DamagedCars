@@ -38,6 +38,7 @@ function Particle(descr) {
 
 particleManager.createStyle("fire", 0, 3, 4, 10, ["circle"], ["red","orange","yellow"], 1, 5, 10);
 particleManager.createStyle("dots", 0, 3, 8, 10, ["square"], ["red","green","yellow","blue"], 1, 5, 10);
+particleManager.createStyle("tireMarks", 0, 0, 4, 4, ["square"], ["black"], 2, 1, 1);
 
 
 Particle.prototype.exists = true;
@@ -75,7 +76,6 @@ particleManager.addSParticle = function(x,y,style,amount,colorOverwrite)
 		var theta = Math.random()*2*Math.PI;
 		var shape = sty.shapes[Math.floor(Math.random()*sty.shapes.length)];
 		var color = col[Math.floor(Math.random()*col.length)];
-		console.log(color);
 		var radius = sty.minRad+Math.random()*(sty.maxRad-sty.minRad);
 		var fadeRate = sty.minRate+Math.random()*(sty.maxRate-sty.minRate);
 		

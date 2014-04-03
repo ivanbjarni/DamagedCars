@@ -19,10 +19,21 @@ function fillBox(ctx, x, y, w, h, style) {
     ctx.fillStyle = oldStyle;
 }
 
+function sgn(x)
+{
+    if(x>=0) return  x;
+    return -x;
+}
+
 function mmod(x,p)
 {
 	res = x%p;
 	if(res >= 0)
 		return res;
 	return res + p;
+}
+
+function angleDiff(x,y)
+{
+    return Math.min(Math.abs(x-y),Math.abs(x-y-Math.PI*2),Math.abs(x-y+Math.PI*2));
 }
