@@ -22,6 +22,8 @@ Car.prototype.tires = 0.02;
 Car.prototype.color = "green"
 Car.prototype.steering = 0.05;
 Car.prototype.topSpeed = 9;
+Car.prototype.topSteeringSpeed = 9;
+Car.prototype.minSteeringSpeed = 3;
 
 
 Car.prototype.update = function (du) {
@@ -32,10 +34,21 @@ Car.prototype.update = function (du) {
         this.vel.x -= Math.cos(this.direction)*this.acc * du;
         this.vel.y -= Math.sin(this.direction)*this.acc * du;
     }
+
+    if(this.vel.length()>=this.topSpeed)
+        this.vel = this.vel.normalize().multiplyBy(this.topSpeed);
+
+    mss = this.minSteeringSpeed;
+    tss = this.topSteeringSpeed;
+    add = angleDiff(this.vel.dir(),this.direction);
+    var swayFactor = Math.min((1-((this.vel.length()-mss)/(tss-mss))*Math.max(1-(add/(Math.PI/2)),0)),1);
+    console.log(swayFactor);
     if (g_keys[this.GO_RIGHT]) {
         this.direction += this.steering*du;
+        this.vel.sway(this.steering*du*swayFactor);
     } else if (g_keys[this.GO_LEFT]) {
         this.direction -= this.steering*du;
+        this.vel.sway(-this.steering*du*swayFactor);
     }
     this.pos.x += this.vel.x*du;
     this.pos.y += this.vel.y*du;
@@ -43,8 +56,7 @@ Car.prototype.update = function (du) {
     this.vel.y /= 1+this.friction+this.tires*angleDiff(this.vel.dir(),this.direction);
     this.direction = mmod(this.direction,2*Math.PI)
 
-    if(this.vel.length()>=this.topSpeed)
-        this.vel = this.vel.normalize().multiplyBy(this.topSpeed);
+    
 
     if (g_keys[this.GO_RESET])
         {this.pos.x=100;
@@ -56,7 +68,6 @@ Car.prototype.update = function (du) {
 Car.prototype.addTireParticles = function()
 {   
     var amount = Math.round(Math.abs(this.tires*Math.pow(angleDiff(this.vel.dir(),this.direction),4)*this.vel.length()*3))
-    console.log(angleDiff(this.vel.dir(),this.direction))
     //Rear Tire Left
     particleManager.addSParticle(this.pos.x-Math.cos(this.direction)*5+Math.sin(this.direction)*3,this.pos.y-Math.sin(this.direction)*5-Math.cos(this.direction)*3,"tireMarks",amount);
     //Rear Tire right

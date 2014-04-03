@@ -31,3 +31,12 @@ vec2.prototype.multiplyBy = function(p)
 	this.y *= p;
 	return this; 
 }
+
+vec2.prototype.sway = function(angle)
+{
+	var dir = this.dir();
+	var len = this.length();
+	var newdir = mmod(dir+angle,Math.PI*2);
+	this.x = len * Math.cos(newdir);
+	this.y = len * Math.sin(newdir);
+}
